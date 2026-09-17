@@ -9,7 +9,6 @@ The output is one self-contained HTML player plus MP4 exports.
 The reference film is `examples/butterfly-life`, the life cycle of a monarch butterfly: 17 shots, 32 seconds, 120 bpm, 1080x1920 at 24 fps.
 
 - Watch the phone cut: [`examples/butterfly-life/exports/butterfly-life-phone.mp4`](examples/butterfly-life/exports/butterfly-life-phone.mp4)
-- Full-quality master: [v1.0.0 release](https://github.com/kuhnhomeuk-cell/procedural-film/releases/tag/v1.0.0)
 - Interactive player: download [`examples/butterfly-life/dist/butterfly-life.html`](examples/butterfly-life/dist/butterfly-life.html) and open it in a browser
 
 ## What is in the repo
@@ -23,8 +22,8 @@ The reference film is `examples/butterfly-life`, the life cycle of a monarch but
 
 - Node.js 20 or newer
 - ffmpeg on the `PATH`
-- Chromium for Playwright (`npx playwright install chromium`)
-- An agent that runs skills and can dispatch subagents, for example Claude Code. The pipeline runs one agent per scene in parallel.
+- Chromium for Playwright, installed after the `npm install` below with `npx --prefix examples/butterfly-life/tools playwright install chromium`
+- An agent that runs skills and dispatches parallel subagents, for example Claude Code
 
 ## Install the skill
 
@@ -39,16 +38,13 @@ git clone https://github.com/kuhnhomeuk-cell/procedural-film.git
 ln -s "$PWD/procedural-film/skills/procedural-film" ~/.claude/skills/procedural-film
 ```
 
-For agents that read `~/.agents/skills/`, link it there instead.
+For another agent, link it into that agent's skills folder.
 
 ## Make a film
 
-Ask your agent for a short film about a topic, for example "make a procedural film about the life of a honeybee".
-The skill runs ten steps: setup, research, art bible, storyboard, timeline, stub pass, scenes, music, critic waves, deliver.
-`node tools/check.cjs` is the gate at every step from the stub pass onward.
-
-Expect a long run.
-A full film runs one agent per shot writing scene files of 1000+ lines each, then critic waves, so it spends a large share of a usage plan.
+Ask your agent for a procedural film about a subject, for example "make a procedural film about the life of a honeybee".
+`skills/procedural-film/SKILL.md` holds the full pipeline.
+Expect a long run: one agent per shot writes a scene file of 1000+ lines, then critic waves review every shot, so a film spends a large share of a usage plan.
 
 ## Rebuild the butterfly film
 

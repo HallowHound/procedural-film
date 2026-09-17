@@ -1,6 +1,6 @@
 ---
 name: procedural-film
-description: Procedural film — generate a short vertical film about any topic, every pixel computed in vanilla-JS canvas and every sound synthesised (zero media assets), delivered as one self-contained HTML file plus MP4 exports. Use when the user asks for a video or short film about a topic or subject.
+description: Procedural film — turn a subject into a short vertical animated film drawn and scored entirely in JavaScript. Use when the user asks for a procedural film, or a short hand-drawn animated film about a subject.
 ---
 
 # Procedural film
@@ -19,15 +19,7 @@ This skill packages a proven pipeline. It ships three things:
 
 ## Worked example
 
-`butterfly-life` is a finished film built with this pipeline: the monarch life cycle, 17 shots, 32 s at 120 bpm. It sits at `examples/butterfly-life/` in this skill's repository (online: https://github.com/kuhnhomeuk-cell/procedural-film/tree/main/examples/butterfly-life). When a template or reference file leaves the shape of a filled document unclear, read the matching file there:
-
-- `docs/art-bible.md` — section 2.2 and section 10 filled for a real subject.
-- `docs/storyboard.md` — full shot entries and shared-geometry tables.
-- `src/timeline.js` — the shots array and cues list.
-- `src/scenes/` — dense scene files at the density the look needs.
-- `src/music.js` — a complete score implementing every cue.
-
-Borrow its structure and its discipline. The new film's subject content comes from step 2's research.
+`butterfly-life` is a finished film from this pipeline, at `../../examples/butterfly-life/` from this skill folder, or online at https://github.com/kuhnhomeuk-cell/procedural-film/tree/main/examples/butterfly-life when that folder is absent. When a template leaves the shape of a filled document unclear, read its counterpart there: `docs/art-bible.md`, `docs/storyboard.md`, `src/timeline.js`, `src/scenes/`, `src/music.js`. Take its structure; the subject comes from step 2's research.
 
 ## Pipeline
 
@@ -71,7 +63,7 @@ Done when: the gate is green and the draft MP4 shows every shot in order, every 
 
 One agent per scene file — file ownership is law (docs/CONTRACT.md). Each scene agent reads `reference/scene-anatomy.md`, its storyboard entry, the art bible and the shared geometry, then writes `src/scenes/NN-<id>.js`, snaps a contact sheet (`node tools/snap.cjs --shot <id> --samples 6 --sheet`) and looks at every frame, iterating until the sheet is on-brief. `snap --only` renders one shot while sibling files are half-written, so scene agents run in parallel freely.
 
-Each scene brief names: the files the agent owns; the shared-geometry tables that bind it (match-cut shapes and cross-shot handoffs are drawn **screen-fixed** — cameras never move them); which scene file owns the canonical progress glyph (later schematic scenes copy it verbatim, never re-derive it); a reminder that storyboard timestamps are global T and convert to shot-local t; and the snap workflow (`--shot <id> --only --samples 6 --sheet`; note `--times` with `--shot` counts from the shot's start, not global).
+Each scene brief names the files the agent owns, the shared-geometry tables that bind it, and the scene file that owns the canonical progress glyph.
 
 Done when: every shot's contact sheet has been eyeballed and judged on-brief, and the gate is green.
 

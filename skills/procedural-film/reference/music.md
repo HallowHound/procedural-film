@@ -1,6 +1,6 @@
 # Music
 
-How the score works and how to compose one. Read this before editing `src/music.js`.
+How the score works and how to compose one.
 
 ## Architecture — keep
 

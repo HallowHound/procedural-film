@@ -95,9 +95,10 @@ The same function feeds the live player (`AudioContext`) and the MP4 render (`Of
 ### Tools
 
 ```bash
-node tools/snap.cjs --times 1.0,2.5 --out .frames/check            # stills at global times
+node tools/snap.cjs --times 1.0,2.5 --out .frames/check            # stills at global times (with --shot, times count from the shot's start)
 node tools/snap.cjs --shot egg-blueprint --samples 6 --sheet        # frames spread over one shot plus a contact sheet
 node tools/snap.cjs --shot egg-blueprint --only                     # load only core, lib, timeline and this shot's file
+node tools/stubgen.cjs                                              # placeholder scene per shot (run before scene work starts)
 node tools/build.cjs                                                # writes dist/butterfly-life.html
 node tools/check.cjs                                                # all automated checks, exits non-zero on failure
 node tools/render.cjs [--from 0 --to 30] [--scale 0.5] [--out exports/name.mp4]
@@ -105,7 +106,7 @@ node tools/render.cjs [--from 0 --to 30] [--scale 0.5] [--out exports/name.mp4]
 
 `snap.cjs` writes a unique temporary HTML page per run under `.tmp/`, so several agents can render at the same time without clashing.
 `--only` exists so a shot can be rendered while a sibling shot file is half-written.
-Images go under `.frames/` (git-ignored). Read them with the Read tool to look at them.
+Images go under `.frames/` (git-ignored). Look at them — reading the pixels is the review.
 
 ## Shell note for agents
 

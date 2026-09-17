@@ -1,6 +1,6 @@
 # Scene anatomy
 
-How a well-formed scene file is built. Read this before writing `src/scenes/NN-<id>.js`.
+How a well-formed scene file is built.
 Expect 1000+ lines for a dense shot — density is part of the look (hundreds of hatch strokes, lattice cells, grain per frame).
 
 ## Skeleton

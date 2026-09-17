@@ -41,7 +41,7 @@ The plan every agent works from. Fill each section; the guidance in *italics* is
 
 ## Shared geometry
 
-*Exact pixel tables for every shape that survives a match cut. Scenes that share a shape copy these numbers exactly, or the match cuts jump — and they seed the shape from the earlier shot's id, so the boil matches too. Shapes in these tables are drawn screen-fixed in every scene that uses them — cameras never move them, or the cut ghosts. Elements that attach or detach around the cut (a prop, a saucer) fade in/out over 5 to 6 frames, symmetric on both sides; a one-frame vanish reads as a bug.*
+*Exact pixel tables for every shape that survives a match cut. Scenes copy these numbers exactly, or the match cuts jump.*
 
 ### G1: *<shape name>*
 
