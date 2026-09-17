@@ -94,6 +94,28 @@ Radial glow halos are allowed only in schematic mode.
 | bark | #5A4332 | Twig and fir bark |
 | fir | #3E5C54 | Oyamel fir needles |
 | mist | #CFC6E0 | Mountain mist bands, empty chrysalis glaze |
+| monarchApex | #E58E3A | Wing apex orange, hero close-up gradient |
+| abdomenSeam | #5E4A3C | Abdomen segment seam stroke |
+| bodyHatch | #6B5646 | Thorax and abdomen fine hatching |
+| eyeDark | #17110D | Compound eye fill |
+| eyeFacet | #6A5646 | Compound eye facet stipple |
+| pureWhite | #FFFFFF | Specular glints, dawn sky multiply top layer |
+| frassBrown | #4A4A2E | Frass pellet fill |
+| magentaCoreDeep | #FFD0E6 | Chrysalis heartbeat glow-dot core, deepest pink |
+| goldCore | #FFF4D0 | Chrysalis gold-dot glow core |
+| magentaCoreMid | #FFE0EF | Chrysalis pulse glow-dot core |
+| magentaCorePale | #FFE6F2 | Wing-vein target glow-dot core |
+| scaleBlackEdge | #6B5645 | Black-category scale outline and ridge stroke |
+| scaleBlackRidge | #5E4A3A | Black-category scale ridge fill |
+| scaleWhiteRidge | #C9B48E | White-category scale ridge fill |
+| milkweedSeed | #7B5534 | Floss seed body fill |
+| milkweedAutumn | #6B4A1E | Autumn stem and leaf mix target |
+| fieldStraw | #D8C48C | Farmland patchwork field, straw gold |
+| fieldWheat | #CDB77E | Farmland patchwork field, wheat gold |
+| fieldOlive | #B9B98A | Farmland patchwork field, olive |
+| skyNightA | #53478B | Night sky stripe band A, pull-back continent |
+| skyNightB | #D6D2DE | Night sky stripe band B |
+| skyDawnB | #FFF1E2 | Dawn sky stripe band B |
 
 ### 2.3 Cool schematic palette (blueprint plate)
 

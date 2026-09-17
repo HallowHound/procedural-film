@@ -11,7 +11,7 @@ This skill packages a proven pipeline. It ships three things:
 
 - `foundation/` — the engine and tools, copied into the new project: `src/core.js`, `src/lib.js`, `src/player.js`, `src/music.js` (engine plus a demo score), and `tools/` (build, check, snap, render, stubgen, audio analysis, fixtures). Everything is driven by `src/timeline.js`, so no tool code changes per film.
 - `templates/` — the four planning documents every film starts from.
-- `reference/` — read only when a step below points at one.
+- `reference/` — read when a step below points at one; the three example images first.
 
 Look first: `reference/example-contact-sheet.jpg` (the whole example film, 24 labelled frames), `reference/example-paper-frame.jpg` and `reference/example-blueprint-frame.jpg` (one full frame of each plate). That density and that finish are the bar.
 
@@ -102,6 +102,6 @@ ffmpeg -i exports/<slug>.mp4 -c:v libx264 -crf 23 -preset medium -c:a copy expor
 
 `node tools/build.cjs` writes `dist/<slug>.html`. Then watch the master end to end with sound, and open the HTML player once (click or space to play, arrow keys step frames, `?shot=<id>` loops one shot).
 
-Write the shot list last: one line per shot saying what it shows, next to the exports, so whoever shares the film can caption it.
+Write `exports/<slug>-shots.md` last: one line per shot saying what it shows, so whoever shares the film can caption it.
 
-Done when: master, phone transcode, the HTML file and the shot list exist, the gate is green, and the final watch-through found nothing to fix.
+Done when: master, phone transcode, the HTML file and `exports/<slug>-shots.md` exist, the gate is green, and the final watch-through found nothing to fix.

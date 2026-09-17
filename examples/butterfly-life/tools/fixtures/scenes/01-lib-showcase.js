@@ -8,7 +8,7 @@ FILM.scene({
     // ---------------------------------------------------------------- paper plate (top)
     L.paper(ctx, { seed: 3 });
     L.text(ctx, 'plate I · ink, hatching, stipple', 70, 96, { size: 34, color: P.inkSoft, tracking: 1 });
-    L.text(ctx, 'danaus plexippus', 1010, 96, { size: 30, color: P.inkFaint, align: 'right', italic: true });
+    L.text(ctx, 'the specimen', 1010, 96, { size: 30, color: P.inkFaint, align: 'right', italic: true });
 
     // stripe window
     const PX = 70, PY = 130, PW = 940, PH = 560;
@@ -23,9 +23,9 @@ FILM.scene({
     L.glowDot(ctx, 880, 250, 46, { color: P.sun, core: P.glow, additive: false, rays: 16, rayLen: 2.3, rayWidth: 0.12, twinkle: 0.04, glow: 3 });
     L.guideCircle(ctx, 880, 250, 92, { color: P.inkFaint, alpha: 0.5, dash: [3, 7] });
 
-    // milkweed leaf
+    // broad leaf
     const leaf = L.smoothPts([[150, 640], [300, 470], [560, 350], [840, 330], [960, 360], [820, 470], [560, 600], [300, 700]], true, 7);
-    L.inkPath(ctx, leaf, { closed: true, fill: P.milkweed, width: 3.4, seed: 11, double: true });
+    L.inkPath(ctx, leaf, { closed: true, fill: P.sage, width: 3.4, seed: 11, double: true });
     const rib = [[190, 650], [420, 520], [700, 410], [950, 362]];
     L.hatch(ctx, leaf, {
       angle: -1.05, spacing: 6, width: 1.1, seed: 12, alpha: 0.85, bend: 1.4,
@@ -48,10 +48,10 @@ FILM.scene({
     ctx.restore();
     L.inkPath(ctx, rib, { width: 3, seed: 14 });
 
-    // monarch egg on the leaf, stippled
+    // egg on the leaf, stippled
     const ex = 610, ey = 430;
     const egg = L.ellipsePts(ex, ey, 30, 44, 48);
-    L.inkPath(ctx, egg, { closed: true, fill: P.spotWhite, width: 2.4, seed: 60 });
+    L.inkPath(ctx, egg, { closed: true, fill: P.white, width: 2.4, seed: 60 });
     L.stipple(ctx, egg, { spacing: 3.6, r: [0.45, 1.25], seed: 61, density: (x, y) => L.smoothstep(-20, 40, (x - ex) * 0.7 + (y - ey) * 0.6) * 0.9 });
     for (let k = -2; k <= 2; k++) {
       L.inkPath(ctx, [[ex + k * 10, ey - 40 + Math.abs(k) * 4], [ex + k * 13, ey], [ex + k * 10, ey + 40 - Math.abs(k) * 4]], { width: 0.9, alpha: 0.7, seed: 62 + k, taper: 10 });
@@ -141,7 +141,7 @@ FILM.scene({
     ctx.restore();
     L.ticks(ctx, gx, gy + gh, { kind: 'linear', length: gw, n: 10, len: 6, major: 5, majorLen: 12, side: -1, alpha: 0.6, baseline: false });
     const names = ['inOutCubic', 'outBack', 'outExpo', 'inOutSine', 'outBounce', 'snap'];
-    const cols = [P.lavender, P.magenta, P.paleBlue, P.lineWhite, P.gold, P.chrysalis];
+    const cols = [P.lavender, P.magenta, P.paleBlue, P.lineWhite, P.sun, P.teal];
     names.forEach((n, k) => {
       const pts = [];
       for (let i = 0; i <= 40; i++) {
@@ -169,6 +169,6 @@ FILM.scene({
       ctx.fillRect(x, y, 2, 2);
     }
     ctx.restore();
-    L.text(ctx, 'monarch', 1010, BY + 60, { size: 44, color: P.lineWhite, alpha: 0.9, align: 'right', weight: 300, tracking: 2 });
+    L.text(ctx, 'film', 1010, BY + 60, { size: 44, color: P.lineWhite, alpha: 0.9, align: 'right', weight: 300, tracking: 2 });
   },
 });

@@ -647,7 +647,7 @@
           }
           const mid = pr.b[Math.floor(pr.b.length / 2)] || [AX, seg.ym];
           if (pr.b.length < 6) continue;
-          L.glowDot(ctx, mid[0] - pr.side * 4, mid[1] + (r() - 0.5) * 12, 4.5, { color: C.mag, core: '#ffd0e6', rays: 0, glow: 6, intensity: FL[fb] * 0.8, seed: SEED + k * 2 + pr.side });
+          L.glowDot(ctx, mid[0] - pr.side * 4, mid[1] + (r() - 0.5) * 12, 4.5, { color: C.mag, core: P.magentaCoreDeep, rays: 0, glow: 6, intensity: FL[fb] * 0.8, seed: SEED + k * 2 + pr.side });
         }
       }
     }
@@ -1166,7 +1166,7 @@
     const bi = boilNow();
     for (let i = 0; i < GOLD.length; i++) {
       const [x, y] = GOLD[i];
-      L.glowDot(ctx, x, y, 2.8, { color: C.gold, core: '#fff4d0', rays: 0, glow: 5, intensity: 0.2, twinkle: 0.1, seed: SEED + 60 + i });
+      L.glowDot(ctx, x, y, 2.8, { color: C.gold, core: P.goldCore, rays: 0, glow: 5, intensity: 0.2, twinkle: 0.1, seed: SEED + 60 + i });
     }
     const gl = GOLD.map((g, i) => [g[0] + (L.h3(i, bi, 3) - 0.5) * 0.5, g[1] + (L.h3(bi, i, 4) - 0.5) * 0.5, g[2] || 1]);
     const ring = new Path2D();
@@ -1914,7 +1914,7 @@
     ctx.arc(cx, cy, L.lerp(58, 150, e), 0, TAU);
     ctx.stroke();
     ctx.restore();
-    L.glowDot(ctx, cx, cy, 6, { color: C.mag, core: '#ffe0ef', rays: 16, rayLen: 3, rayWidth: 0.16, glow: 6, intensity: a * 0.8, seed: SEED + 1700 });
+    L.glowDot(ctx, cx, cy, 6, { color: C.mag, core: P.magentaCoreMid, rays: 16, rayLen: 3, rayWidth: 0.16, glow: 6, intensity: a * 0.8, seed: SEED + 1700 });
   }
 
   function drawCycleGlyph(ctx) {

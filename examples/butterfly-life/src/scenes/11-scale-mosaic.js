@@ -854,7 +854,7 @@
     ctx.save();
     ctx.lineCap = "round";
     ctx.lineWidth = 1.3 / z;
-    const cols = [P.monarchDeep, "#6B5645", P.inkFaint, P.monarchDeep];
+    const cols = [P.monarchDeep, P.scaleBlackEdge, P.inkFaint, P.monarchDeep];
     const al = [0.78, 0.7, 0.6, 0.7];
     for (let c = 0; c < 4; c++) {
       ctx.globalAlpha = al[c] * amt;
@@ -866,8 +866,8 @@
 
   const FILL = { [C_OR]: P.monarch, [C_BK]: P.veinBlack, [C_WH]: P.spotWhite, [C_UN]: P.monarchUnder };
   const DEEP = { [C_OR]: P.monarchDeep, [C_BK]: P.ink, [C_WH]: P.paperShade, [C_UN]: P.monarchDeep };
-  const RIDGE = { [C_OR]: P.monarchDeep, [C_BK]: '#5E4a3a', [C_WH]: '#C9B48E', [C_UN]: P.monarchDeep };
-  const EDGE = { [C_OR]: P.ink, [C_BK]: '#6B5645', [C_WH]: P.inkFaint, [C_UN]: P.ink };
+  const RIDGE = { [C_OR]: P.monarchDeep, [C_BK]: P.scaleBlackRidge, [C_WH]: P.scaleWhiteRidge, [C_UN]: P.monarchDeep };
+  const EDGE = { [C_OR]: P.ink, [C_BK]: P.scaleBlackEdge, [C_WH]: P.inkFaint, [C_UN]: P.ink };
   const COLS = [C_OR, C_BK, C_WH, C_UN];
 
   // tiles: T 20.5 to 21.0, one flat tile per lattice cell, cracking out from the target on twos

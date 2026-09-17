@@ -472,7 +472,7 @@
     }
     ctx.fillStyle = P.spotWhite;
     ctx.fill(white);
-    ctx.fillStyle = '#E58E3A';
+    ctx.fillStyle = P.monarchApex;
     ctx.fill(orange);
     L.inkPath(ctx, W.margin, { closed: true, width: 5, color: P.ink, seed: sd('wo', key), wobble: 1.2, double: { alpha: 0.4, width: 0.3 } });
   }
@@ -506,12 +506,12 @@
       seg.quadraticCurveTo(540, y + 5, 540 + w, y - 4);
     }
     ctx.save();
-    ctx.strokeStyle = '#5E4A3C';
+    ctx.strokeStyle = P.abdomenSeam;
     ctx.lineWidth = 1.6;
     ctx.globalAlpha = 0.9;
     ctx.stroke(seg);
     ctx.restore();
-    L.hatch(ctx, ABDOMEN, { angle: 0.25, spacing: 5, width: 1.1, color: '#6B5646', alpha: 0.75, length: [6, 14], seed: sd('abdh'), density: (x) => 0.9 * (1 - sstep(530, 546, x)) });
+    L.hatch(ctx, ABDOMEN, { angle: 0.25, spacing: 5, width: 1.1, color: P.bodyHatch, alpha: 0.75, length: [6, 14], seed: sd('abdh'), density: (x) => 0.9 * (1 - sstep(530, 546, x)) });
     const th = L.ellipsePts(540, 900, 38, 56, 48);
     const hair = new Path2D();
     const hr = L.rng(sd('hair', bi));
@@ -528,7 +528,7 @@
     ctx.stroke(hair);
     ctx.restore();
     L.inkPath(ctx, th, { closed: true, width: 5, color: P.ink, fill: P.veinBlack, seed: sd('thorax'), wobble: 1 });
-    L.hatch(ctx, th, { angle: -0.9, spacing: 5, width: 1.1, color: '#6B5646', alpha: 0.7, length: [5, 12], seed: sd('thh'), density: (x, y) => 0.95 * (1 - sstep(-0.2, 0.6, ((x - 540) / 38 + (y - 900) / 56) * 0.7)) });
+    L.hatch(ctx, th, { angle: -0.9, spacing: 5, width: 1.1, color: P.bodyHatch, alpha: 0.7, length: [5, 12], seed: sd('thh'), density: (x, y) => 0.95 * (1 - sstep(-0.2, 0.6, ((x - 540) / 38 + (y - 900) / 56) * 0.7)) });
     const dots = (list) => {
       ctx.fillStyle = P.spotWhite;
       ctx.beginPath();
@@ -558,8 +558,8 @@
     L.inkPath(ctx, L.ellipsePts(540, 832, 27, 28, 36), { closed: true, width: 4, color: P.ink, fill: P.veinBlack, seed: sd('head'), wobble: 0.6 });
     for (const side of [-1, 1]) {
       const ex = 540 + side * 25, ey = 826;
-      L.inkPath(ctx, L.ellipsePts(ex, ey, 16, 18, 30), { closed: true, width: 3, color: P.ink, fill: '#17110D', seed: sd('eye', side), wobble: 0.5 });
-      L.stipple(ctx, L.ellipsePts(ex, ey, 13, 15, 20), { spacing: 5, density: 0.8, r: [0.8, 1.1], color: '#6A5646', alpha: 0.6, seed: sd('facet', side) });
+      L.inkPath(ctx, L.ellipsePts(ex, ey, 16, 18, 30), { closed: true, width: 3, color: P.ink, fill: P.eyeDark, seed: sd('eye', side), wobble: 0.5 });
+      L.stipple(ctx, L.ellipsePts(ex, ey, 13, 15, 20), { spacing: 5, density: 0.8, r: [0.8, 1.1], color: P.eyeFacet, alpha: 0.6, seed: sd('facet', side) });
       ctx.save();
       ctx.beginPath();
       ctx.ellipse(ex - 5, ey - 7, 5, 3, -0.6, 0, TAU);
@@ -1291,19 +1291,19 @@
     ctx.stroke(fl);
     ctx.beginPath();
     ctx.ellipse(0, 2 * size, 4.2 * size, 6.5 * size, 0, 0, TAU);
-    ctx.fillStyle = L2SEED;
+    ctx.fillStyle = SEED_BODY;
     ctx.fill();
     ctx.lineWidth = 1.1 * s / size;
     ctx.strokeStyle = P.ink;
     ctx.stroke();
     ctx.restore();
   }
-  const L2SEED = '#7B5534';
+  const SEED_BODY = LIB.pal.milkweedSeed;
 
   function drawLeaf2(ctx, V, P, Lf) {
     const L = LIB;
     const col = L.mix(P.milkweed, P.ochre, Lf.aut * 0.55);
-    const deep = L.mix(L.mix(P.milkweedDeep, P.ink, 0.35), '#6B4A1E', Lf.aut * 0.5);
+    const deep = L.mix(L.mix(P.milkweedDeep, P.ink, 0.35), P.milkweedAutumn, Lf.aut * 0.5);
     ink(ctx, V, [Lf.base, Lf.at(0, 0)], { width: 9, color: P.milkweedStem, seed: sd('pet', Lf.key), taper: [0, 3], swell: 0, wobble: 0.3 });
     ink(ctx, V, Lf.outline, { closed: true, width: 3, fill: col, seed: sd('lo', Lf.key), wobble: 1.2 });
     // autumn: yellowing from the margin inward between side veins
@@ -1400,7 +1400,7 @@
       ctx.rotate(s.a + Math.PI / 2);
       ctx.beginPath();
       ctx.ellipse(0, 0, 7, 10, 0, 0, TAU);
-      ctx.fillStyle = L2SEED;
+      ctx.fillStyle = SEED_BODY;
       ctx.fill();
       ctx.lineWidth = 1.2 * V.ws;
       ctx.strokeStyle = P.ink;
@@ -1784,7 +1784,7 @@
       const jx = LIB.noise2(i * 0.9, j * 0.9, sd('fjx')) * 26, jy = LIB.noise2(i * 0.9 + 7, j * 0.9, sd('fjy')) * 20;
       return R(gx[i] + jx, gy[j] + jy);
     };
-    const cols = ['#D8C48C', 'sage', 'milkweed', 'tan', '#CDB77E', 'paperShade', 'ochre', '#B9B98A'];
+    const cols = [LIB.pal.fieldStraw, 'sage', 'milkweed', 'tan', LIB.pal.fieldWheat, 'paperShade', 'ochre', LIB.pal.fieldOlive];
     const fields = [];
     for (let i = 0; i < nx; i++) {
       for (let j = 0; j < ny; j++) {

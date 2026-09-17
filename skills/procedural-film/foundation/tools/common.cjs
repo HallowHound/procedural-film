@@ -206,10 +206,12 @@ window.__h = {
     FILM.only = only || null;
     return { w: c.width, h: c.height, duration: FILM.DURATION, frames: FILM.FRAMES };
   },
-  render(T) {
+  render(T, o) {
     FILM.errors = [];
+    FILM.post = !(o && o.post === false);
     const t0 = performance.now();
     const shot = FILM.renderFrame(T);
+    FILM.post = true;
     FILM.ctx.getImageData(0, 0, 1, 1); // force the deferred raster to run so the timing is real
     const ms = performance.now() - t0;
     return { ms, shot: shot ? shot.id : null, errors: FILM.errors.map(e => ({ message: e.message, stack: e.stack, shot: e.shot, missing: !!e.missing })) };

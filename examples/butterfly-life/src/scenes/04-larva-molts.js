@@ -1540,7 +1540,7 @@
     ctx.beginPath();
     ctx.arc(x + r * 0.3, y + r * 0.3, r * 0.45, 0, TAU);
     ctx.fill();
-    ctx.fillStyle = '#FFFFFF';
+    ctx.fillStyle = C.pureWhite;
     ctx.beginPath();
     ctx.arc(x - r * 0.35, y - r * 0.35, r * 0.28, 0, TAU);
     ctx.fill();
@@ -1721,7 +1721,7 @@
       ctx.beginPath();
       ctx.ellipse(x + 1.2, y + 1.6, s, s * 0.72, rot, 0, TAU);
       ctx.fill();
-      ctx.fillStyle = '#4A4A2E';
+      ctx.fillStyle = C.frassBrown;
       ctx.beginPath();
       ctx.ellipse(x, y, s, s * 0.72, rot, 0, TAU);
       ctx.fill();

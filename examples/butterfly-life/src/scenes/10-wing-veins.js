@@ -264,8 +264,8 @@
       g.fillStyle = grd;
       g.fillRect(0, 0, px, px);
       grd = g.createRadialGradient(m, m, 0, m, m, r * S);
-      grd.addColorStop(0, 'rgba(255,255,255,1)');
-      grd.addColorStop(0.55, 'rgba(255,255,255,0.92)');
+      grd.addColorStop(0, rgba(P.pureWhite, 1));
+      grd.addColorStop(0.55, rgba(P.pureWhite, 0.92));
       grd.addColorStop(1, rgba(color, 0));
       g.fillStyle = grd;
       g.beginPath();
@@ -2946,7 +2946,7 @@
         const u = (tt - TM.lock) / (9 * FR);
         L.guideCircle(ctx, TARGET[0], TARGET[1], lerp(10, 86, E.outExpo(u)), { color: C.mag, alpha: 1 - u, width: 3 });
       }
-      L.glowDot(ctx, TARGET[0], TARGET[1], 4, { color: C.mag, core: '#ffe6f2', rays: 8, rayLen: 3, glow: 6, intensity: magA * 0.9, seed: SEED + 190 });
+      L.glowDot(ctx, TARGET[0], TARGET[1], 4, { color: C.mag, core: P.magentaCorePale, rays: 8, rayLen: 3, glow: 6, intensity: magA * 0.9, seed: SEED + 190 });
     }
   }
 

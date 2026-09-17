@@ -9,8 +9,11 @@
 //                  hash identically warm forward, warm reversed, in a fresh page shuffled with decoys, cold (the first
 //                  draw in a fresh page) and sequential (drawn straight after the frame before it)
 //   3 sources      no Math.random, Date, performance.now or crypto randomness in src drawing/audio code;
-//                  no text drawn below the Shorts safe area (literal y > 1540);
-//                  warns on a literal hex colour outside lib.js (colours come from lib.pal)
+//                  no text drawn below the Shorts safe area (a literal y argument > 1540; an expression is not read);
+//                  warns on a literal colour outside lib.js (colours come from lib.pal)
+//   4 timeline     coverage, ids, transitions; warns on off-grid hits and cuts, a bpm whose 16ths
+//                  miss the frame grid, and a duration that is not whole bars
+//   5 draw         every checked frame draws without throwing and is not one flat colour
 //   4 timeline     shots cover 0..duration with no gaps or overlaps; every shot's file registers its id
 //   5 draw         first, middle and last frame of every shot draw without throwing
 //   6 cost         frame times from a sweep across the film; slowest frames listed
@@ -34,19 +37,16 @@ function report(n, name, ok, summary, details = []) {
   if (details.length > 40) console.log(`       ... ${details.length - 40} more`);
 }
 
-// Widest channel spread over a 32x32 downscale of the current frame: <= 6 means one flat colour.
-function flatness(pg) {
-  return pg.page.evaluate(() => {
-    const s = 32;
-    const o = document.createElement('canvas');
-    o.width = s;
-    o.height = s;
-    const x = o.getContext('2d');
-    x.drawImage(window.FILM.canvas, 0, 0, s, s);
-    const d = x.getImageData(0, 0, s, s).data;
+// Widest channel spread over the bare frame (grain post off, every 4th pixel): <= 6 means one flat
+// colour. Sampling at full resolution keeps a small bright element, a spark or a glint, above the bar.
+function flatness(pg, T) {
+  return pg.page.evaluate((t) => {
+    window.__h.render(t, { post: false }); // the grain post hides a blank frame behind its own noise
+    const c = window.FILM.canvas;
+    const d = window.FILM.ctx.getImageData(0, 0, c.width, c.height).data;
     const mn = [255, 255, 255];
     const mx = [0, 0, 0];
-    for (let i = 0; i < d.length; i += 4) {
+    for (let i = 0; i < d.length; i += 16) {
       for (let k = 0; k < 3; k++) {
         const v = d[i + k];
         if (v < mn[k]) mn[k] = v;
@@ -54,7 +54,7 @@ function flatness(pg) {
       }
     }
     return Math.max(mx[0] - mn[0], mx[1] - mn[1], mx[2] - mn[2]);
-  });
+  }, T);
 }
 
 // Remove comments, keep strings (so a banned call hidden in a string still counts).
@@ -157,12 +157,13 @@ async function main() {
     }
     // colours come from lib.pal (art bible 2.2): a literal hex in a scene or timeline file drifts from the palette
     const hexWarns = [];
-    const literalHex = /#[0-9a-fA-F]{6}\b/;
+    const literalColour = /#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})\b|['"`]\s*(?:rgba?|hsla?)\(/gi;
     for (const f of [...src.sceneFiles, path.join(src.base, 'timeline.js')]) {
       if (!fs.existsSync(f)) continue;
       stripComments(fs.readFileSync(f, 'utf8')).split('\n').forEach((line, i) => {
-        const m = line.match(literalHex);
-        if (m) hexWarns.push(`warn: ${C.rel(f)}:${i + 1}  literal colour ${m[0]} outside lib.js (name it in lib.pal)  | ${line.trim().slice(0, 80)}`);
+        for (const m of line.matchAll(literalColour)) {
+          hexWarns.push(`warn: ${C.rel(f)}:${i + 1}  literal colour ${m[0].trim()} outside lib.js (name it in lib.pal)  | ${line.trim().slice(0, 80)}`);
+        }
       });
     }
     report(
@@ -214,7 +215,14 @@ async function main() {
     });
     // every event sits on the beat grid (16ths at the film's bpm), so cuts and hits land together
     for (const c of TL.cues || []) {
-      if (typeof c.t === 'number' && offGrid(c.t)) tlWarnings.push(`cue at ${c.t}s is off the 16th-note grid at ${TL.bpm} bpm${c.note ? ` (${String(c.note).slice(0, 40)})` : ''}`);
+      // the art bible binds pops, cuts and hits to the grid; a swell or ambience may lead into one
+      const onGridKind = /^(hit|cut|pop)$/i.test(String(c.kind || ''));
+      if (onGridKind && typeof c.t === 'number' && offGrid(c.t)) tlWarnings.push(`cue at ${c.t}s (kind ${c.kind}) is off the 16th-note grid at ${TL.bpm} bpm${c.note ? ` (${String(c.note).slice(0, 40)})` : ''}`);
+    }
+    if (TL.bpm > 0 && 360 % TL.bpm !== 0) tlWarnings.push(`bpm ${TL.bpm}: 16ths do not land on 24 fps frames (360 / bpm must be whole: 72, 90, 120, 180)`);
+    const bar = TL.bpm > 0 ? 240 / TL.bpm : 0;
+    if (bar > 0 && Math.abs(TL.duration / bar - Math.round(TL.duration / bar)) > 1e-3) {
+      tlWarnings.push(`duration ${TL.duration}s is ${(TL.duration / bar).toFixed(2)} bars at ${TL.bpm} bpm, not a whole number of bars`);
     }
     if (shots.length && Math.abs(shots[shots.length - 1].end - TL.duration) > EPS) {
       tlProblems.push(`last shot '${shots[shots.length - 1].id}' ends at ${shots[shots.length - 1].end}, duration is ${TL.duration}`);
@@ -289,7 +297,7 @@ async function main() {
           const r = await pg.page.evaluate((T) => window.__h.render(T), f / FPS);
           drawn++;
           const softened = label === 'first' && shot.transitionIn && shot.transitionIn.kind !== 'cut';
-          if (!softened && (await flatness(pg)) <= 6) {
+          if (!softened && (await flatness(pg, f / FPS)) <= 6) {
             drawFails.push(`${shot.id} ${label} frame f${f} (T=${(f / FPS).toFixed(3)}) is one flat colour: a blank frame reads as a bug`);
           }
           if (label === 'first') firstTouch.push(`${shot.id} f${f} ${r.ms.toFixed(0)}ms`);

@@ -3,7 +3,7 @@
 An index of shot types harvested from `examples/butterfly-life`, the one finished film in this repo.
 Read this during storyboard step 4 (`SKILL.md`) so a new film on a new subject reaches for a proven shot instead of inventing every one from scratch.
 Each entry generalizes one or more storyboard shots away from butterflies; open the example file for the concrete numbers, geometry and beat placement.
-The last two entries are editing devices the example film does not use yet; reach for them when a beat needs punctuation the seventeen shots above don't cover.
+The last two entries are editing devices the example film does not use; reach for them when a beat needs punctuation the types above do not cover.
 
 ## 1. Cold open on the hero
 
@@ -12,7 +12,7 @@ Establishes the protagonist fully formed and centred in one pose that reads as t
 - Duration: 1.5 s
 - Plate: paper
 - Camera: locked push-in (zoom 1.00 to 1.05) landing on the beat
-- Leans on: `L.inkPath`, `L.hatch`, `L.ellipsePts`, `L.stipple`, `L.crossHatch`, `L.camera`
+- Leans on: `inkPath`, `hatch`, `stipple`, `crossHatch`, `camera`
 - Example: `examples/butterfly-life/src/scenes/01-hero-on-milkweed.js`
 
 ## 2. Blueprint genesis: a spark becomes a structure
@@ -22,7 +22,7 @@ Opens the film's founding structure from nothing: a single spark threads into fr
 - Duration: 2.5 s
 - Plate: blueprint
 - Camera: locked at zoom 1; the geometry animates, the camera never moves
-- Leans on: `L.blueprint`, `L.tracePath`, `L.glowDot`, `L.bracket`, `L.ticks`, `L.guideCircle`, `L.arcAnnotation`
+- Leans on: `blueprint`, `tracePath`, `glowDot`, `bracket`, `ticks`, `guideCircle`, `arcAnnotation`
 - Example: `examples/butterfly-life/src/scenes/02-egg-blueprint.js`
 
 ## 3. Breaking out: emergence from a casing
@@ -32,7 +32,7 @@ The subject forces its way out of an enclosing structure (a shell, a case, a coc
 - Duration: 1.5 to 2.0 s
 - Plate: paper
 - Camera: locked, or pulls back mid-shot to widen the frame around the burst
-- Leans on: `L.smoothstep`, `L.tracePath`, `L.polyContains`, `L.guideCircle`, `L.arcAnnotation`, `L.camera`
+- Leans on: `tracePath`, `guideCircle`, `arcAnnotation`, `camera`
 - Example: `examples/butterfly-life/src/scenes/03-egg-hatch.js` (also `09-eclosion.js` for the locked, flash-in variant)
 
 ## 4. Developmental journey: travel and grow along a path
@@ -42,7 +42,7 @@ The subject moves through a static environment while changing state at fixed int
 - Duration: 2.5 s
 - Plate: paper
 - Camera: locked, with a slow push (zoom 1.00 to 1.03) as the subject travels
-- Leans on: `L.inkPath`, `L.noise1`, `L.rng`, `L.hatch`, `L.inkLine`, `L.guideCircle`, `L.camera`
+- Leans on: `inkPath`, `hatch`, `inkLine`, `guideCircle`, `camera`
 - Example: `examples/butterfly-life/src/scenes/04-larva-molts.js`
 
 ## 5. Growth-stage ladder (blueprint size comparison)
@@ -52,7 +52,7 @@ Blueprint comparison of the same subject at several stages, stacked by size and 
 - Duration: 1.5 s
 - Plate: blueprint
 - Camera: locked at zoom 1
-- Leans on: `L.hash`, `L.inkPath`, `L.glowDot`, `L.ticks`, `L.bracket`, `L.tracePath`, `L.hexLattice`, `L.blueprint`
+- Leans on: `inkPath`, `glowDot`, `ticks`, `bracket`, `tracePath`, `hexLattice`, `blueprint`
 - Example: `examples/butterfly-life/src/scenes/05-instar-ladder.js`
 
 ## 6. Silhouette transformation (match-cut into a new form)
@@ -62,7 +62,7 @@ The subject contracts or reshapes on camera from one recognizable silhouette int
 - Duration: 2.0 s
 - Plate: paper
 - Camera: locked at zoom 1
-- Leans on: `L.inkPath`, `L.mix`, `L.smoothstep`, `L.tracePath`, `L.arcAnnotation`, `L.bracket`
+- Leans on: `inkPath`, `tracePath`, `arcAnnotation`, `bracket`
 - Example: `examples/butterfly-life/src/scenes/06-j-hang.js`
 
 ## 7. Blueprint schematic of an internal structure (rebuild)
@@ -72,7 +72,7 @@ Blueprint cutaway of what is happening inside a sealed structure while the outsi
 - Duration: 1.5 s
 - Plate: blueprint
 - Camera: locked at zoom 1
-- Leans on: `L.lerp`, `L.clamp`, `L.ellipsePts`, `L.ticks`, `L.smoothstep`, `L.tracePath`, `L.glowDot`, `L.bracket`, `L.hexLattice`, `L.blueprint`
+- Leans on: `ticks`, `tracePath`, `glowDot`, `bracket`, `hexLattice`, `blueprint`
 - Example: `examples/butterfly-life/src/scenes/07-inside-chrysalis.js`
 
 ## 8. Time-passage hold with a cycle tally
@@ -82,7 +82,7 @@ The camera holds on a mostly still subject while a repeating cycle (day and nigh
 - Duration: 1.5 to 3.0 s
 - Plate: paper
 - Camera: locked at zoom 1
-- Leans on: `L.tracePath`, `L.smoothstep`, `L.hatch`, `L.inkLine`, `L.arcAnnotation`, `L.mix`
+- Leans on: `tracePath`, `hatch`, `inkLine`, `arcAnnotation`
 - Example: `examples/butterfly-life/src/scenes/08-chrysalis-days.js` (also `15-oyamel-winter.js` for the population variant)
 
 ## 9. Blueprint schematic of a working mechanism
@@ -92,7 +92,7 @@ Blueprint diagram of a system at work, plumbing, wiring, a sensory or steering m
 - Duration: 1.5 s
 - Plate: blueprint
 - Camera: locked, or easing a few percent toward a push-in target that sets up the next shot
-- Leans on: `L.glowDot`, `L.tracePath`, `L.guideCircle`, `L.hexLattice`, `L.bracket`, `L.arcAnnotation`, `L.blueprint`, `L.camera`
+- Leans on: `glowDot`, `tracePath`, `guideCircle`, `hexLattice`, `bracket`, `arcAnnotation`, `blueprint`, `camera`
 - Example: `examples/butterfly-life/src/scenes/10-wing-veins.js` (also `12-sun-compass.js` for the fully locked variant)
 
 ## 10. Macro push-in to surface texture
@@ -102,7 +102,7 @@ One continuous push from a normal establishing view down into the subject's surf
 - Duration: 2.5 s
 - Plate: paper
 - Camera: continuous exponential push-in (zoom 1.08 to 40x), steps landing on the beats
-- Leans on: `L.hatch`, `L.smoothPts`, `L.mix`, `L.ellipsePts`, `L.stipple`, `L.camera`, `L.arcAnnotation`
+- Leans on: `hatch`, `stipple`, `camera`, `arcAnnotation`
 - Example: `examples/butterfly-life/src/scenes/11-scale-mosaic.js`
 
 ## 11. Pull-back to reveal scale
@@ -112,7 +112,7 @@ One continuous zoom out through several nested layers of context, each layer its
 - Duration: 3.0 s
 - Plate: paper
 - Camera: one log-linear zoom-out, each layer landing on its own beat with its own anchor
-- Leans on: `LIB.smoothPts`, `LIB.rng`, `LIB.polyContains`, `LIB.guideCircle`, `LIB.bounds`, `LIB.fbm1`, `LIB.fbm2`
+- Leans on: `guideCircle`
 - Example: `examples/butterfly-life/src/scenes/13-pull-back-continent.js`
 
 ## 12. Population/column shot
@@ -122,7 +122,7 @@ A stream of many small instances of the subject moving together across the frame
 - Duration: 1.5 s
 - Plate: paper
 - Camera: locked, with a slow drift or tilt across the shot
-- Leans on: `LIB.h3`, `LIB.rng`, `LIB.inkPath`, `LIB.hatch`, `LIB.mix`, `LIB.inkLine`, `LIB.arcAnnotation`
+- Leans on: `inkPath`, `hatch`, `inkLine`, `arcAnnotation`
 - Example: `examples/butterfly-life/src/scenes/14-migration-column.js`
 
 ## 13. Snap zoom-in to a match-cut
@@ -132,7 +132,7 @@ The subject performs one last action, then the camera snap-zooms from normal sca
 - Duration: 1.0 s
 - Plate: paper
 - Camera: snap zoom (1x to tens of x) with an eased arrival, keeping one screen point fixed
-- Leans on: `L.h3`, `L.inkPath`, `L.hatch`, `L.smoothPts`, `L.mix`, `L.stipple`, `L.crossHatch`
+- Leans on: `inkPath`, `hatch`, `stipple`, `crossHatch`
 - Example: `examples/butterfly-life/src/scenes/16-spring-egg.js`
 
 ## 14. Loop-closing repeat of the opening
@@ -143,7 +143,7 @@ The one shot in the film that carries a wordmark.
 - Duration: 1.5 s
 - Plate: blueprint
 - Camera: locked at zoom 1
-- Leans on: `L.h3`, `L.ticks`, `L.bracket`, `L.tracePath`, `L.guideCircle`, `L.glowDot`, `L.text`, `L.blueprint`
+- Leans on: `ticks`, `bracket`, `tracePath`, `guideCircle`, `glowDot`, `text`, `blueprint`
 - Example: `examples/butterfly-life/src/scenes/17-egg-loop.js`
 
 ## 15. Macro insert (editing device)

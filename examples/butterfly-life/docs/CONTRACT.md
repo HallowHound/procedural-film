@@ -97,6 +97,7 @@ The same function feeds the live player (`AudioContext`) and the MP4 render (`Of
 ```bash
 node tools/snap.cjs --times 1.0,2.5 --out .frames/check            # stills at global times (with --shot, times count from the shot's start)
 node tools/snap.cjs --shot egg-blueprint --samples 6 --sheet        # frames spread over one shot plus a contact sheet
+node tools/snap.cjs --samples 24 --sheet --scale 0.25               # the whole film on one labelled sheet
 node tools/snap.cjs --shot egg-blueprint --only                     # load only core, lib, timeline and this shot's file
 node tools/stubgen.cjs                                              # placeholder scene per shot (run before scene work starts)
 node tools/build.cjs                                                # writes dist/butterfly-life.html

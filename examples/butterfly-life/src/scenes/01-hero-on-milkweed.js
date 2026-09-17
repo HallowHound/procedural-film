@@ -102,7 +102,7 @@
     hood: LIB.mix(PAL.milkweedFlower, PAL.white, 0.22),
     leafDeep: LIB.mix(PAL.milkweedDeep, PAL.ink, 0.42),
     stemDeep: LIB.mix(PAL.milkweedDeep, PAL.ink, 0.35),
-    apexOrange: '#E58E3A',
+    apexOrange: PAL.monarchApex,
     underDeep: LIB.mix(PAL.monarchUnder, PAL.monarchDeep, 0.55),
   };
 
@@ -982,7 +982,7 @@
       seg.moveTo(540 - w, y - 4);
       seg.quadraticCurveTo(540, y + 5, 540 + w, y - 4);
     }
-    ctx.strokeStyle = '#5E4A3C';
+    ctx.strokeStyle = P.abdomenSeam;
     ctx.lineWidth = 1.6;
     ctx.globalAlpha = 0.9;
     ctx.stroke(seg);
@@ -991,7 +991,7 @@
       angle: 0.25,
       spacing: 5,
       width: 1.1,
-      color: '#6B5646',
+      color: P.bodyHatch,
       alpha: 0.75,
       length: [6, 14],
       seed: sd('abdh'),
@@ -1016,7 +1016,7 @@
       angle: -0.9,
       spacing: 5,
       width: 1.1,
-      color: '#6B5646',
+      color: P.bodyHatch,
       alpha: 0.7,
       length: [5, 12],
       seed: sd('thh'),
@@ -1071,8 +1071,8 @@
     L.inkPath(ctx, L.ellipsePts(540, 830, 28, 30, 36), { closed: true, width: 4, color: P.ink, fill: P.veinBlack, seed: sd('head'), wobble: 0.6 });
     for (const side of [-1, 1]) {
       const ex = 540 + side * 25, ey = 826;
-      L.inkPath(ctx, L.ellipsePts(ex, ey, 16, 18, 30), { closed: true, width: 3, color: P.ink, fill: '#17110D', seed: sd('eye', side), wobble: 0.5 });
-      L.stipple(ctx, L.ellipsePts(ex, ey, 13, 15, 20), { spacing: 5, density: 0.8, r: [0.8, 1.1], color: '#6A5646', alpha: 0.6, seed: sd('facet', side) });
+      L.inkPath(ctx, L.ellipsePts(ex, ey, 16, 18, 30), { closed: true, width: 3, color: P.ink, fill: P.eyeDark, seed: sd('eye', side), wobble: 0.5 });
+      L.stipple(ctx, L.ellipsePts(ex, ey, 13, 15, 20), { spacing: 5, density: 0.8, r: [0.8, 1.1], color: P.eyeFacet, alpha: 0.6, seed: sd('facet', side) });
       ctx.beginPath();
       ctx.ellipse(ex - 5, ey - 7, 5, 3, -0.6, 0, TAU);
       ctx.fillStyle = P.spotWhite;

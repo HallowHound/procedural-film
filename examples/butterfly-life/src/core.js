@@ -304,6 +304,7 @@
   function postShot(ctx, shot, def, T) {
     const mode = modeOf(shot);
     if (mode === 'none') return;
+    if (FILM.post === false) return; // tools measure a bare frame; never set in the shipped player
     let cfg = def && def.post !== undefined ? def.post : shot.post;
     if (cfg === false) return;
     let amount = 1;

@@ -404,13 +404,13 @@
     clipPoly(ctx, g.poly);
     ctx.globalCompositeOperation = 'destination-out';
     const fadeT = ctx.createLinearGradient(0, 1470, 0, 1535);
-    fadeT.addColorStop(0, 'rgba(0,0,0,1)');
-    fadeT.addColorStop(1, 'rgba(0,0,0,0)');
+    fadeT.addColorStop(0, L.rgba(P.ink, 1));
+    fadeT.addColorStop(1, L.rgba(P.ink, 0));
     ctx.fillStyle = fadeT;
     ctx.fillRect(-40, 1470, 580, 65);
     const fadeR = ctx.createLinearGradient(485, 0, 520, 0);
-    fadeR.addColorStop(0, 'rgba(0,0,0,0)');
-    fadeR.addColorStop(1, 'rgba(0,0,0,1)');
+    fadeR.addColorStop(0, L.rgba(P.ink, 0));
+    fadeR.addColorStop(1, L.rgba(P.ink, 1));
     ctx.fillStyle = fadeR;
     ctx.fillRect(485, 1470, 40, 500);
     ctx.restore();
