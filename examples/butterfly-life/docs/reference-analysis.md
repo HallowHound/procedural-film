@@ -37,6 +37,20 @@ Our version is 1080x1920 vertical (YouTube Shorts), so compositions must be re-t
 | 24.5-26.0 | Illustrated | Morning. A green leaf with hatched veins. A large dew drop on it acts as a fisheye lens, refracting the window and a fly inside it. A young fly at left, the orange at the bottom right, the sun with drawn rays in the window. Big faint construction arcs overlay the whole frame. |
 | 26.0-27.0 | Schematic | Back to the egg blueprint from the start, two nuclei glowing: the cycle loops. A thin rounded lowercase wordmark bottom right. |
 
+## Measured: the cadence and the grain
+
+Drawn on twos at 24 fps: frame-to-frame difference alternates large, small, large, small for the whole 27 s.
+On the paper shots the held frame still differs by about 0.3 to 1.4 average luma levels, so a fine grain changes every frame.
+On the navy schematic shots the held frame differs by 0.01 to 0.08, the encoder's own noise floor, so those plates are frozen.
+Our house style re-seeds the grain at 12 fps on both plates instead, so the two frames of a pair are one identical image (art bible 4.3).
+That is a deliberate difference from the reference, not an oversight.
+
+Measured 17 Sep 2026 with:
+
+```bash
+ffmpeg -i fly.mp4 -vf "tblend=all_mode=difference,signalstats,metadata=print:key=lavfi.signalstats.YAVG" -f null -
+```
+
 ## Style rules to carry over
 
 1. **Two alternating visual modes.** Warm hand-illustrated scenes and cool scientific-blueprint scenes, cut against each other roughly every 1 to 2.5 seconds. The schematic shots explain what is happening inside; the illustrated shots show the life.
