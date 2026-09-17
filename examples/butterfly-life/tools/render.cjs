@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // render.cjs : deterministic frame-by-frame render to MP4 with the synthesised soundtrack.
 //
-//   node tools/render.cjs                                  whole film -> exports/butterfly-life.mp4
+//   node tools/render.cjs                                  whole film -> exports/<slug>.mp4 (slug = project folder name)
 //   node tools/render.cjs --from 4 --to 9 --scale 0.5 --out exports/test.mp4
 //   node tools/render.cjs --workers 4                      parallel pages -> numbered PNGs in .tmp/, one ffmpeg pass
 //
@@ -24,7 +24,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 const C = require('./common.cjs');
 
-const FFMPEG = fs.existsSync('/opt/homebrew/bin/ffmpeg') ? '/opt/homebrew/bin/ffmpeg' : 'ffmpeg';
+const FFMPEG = process.env.FFMPEG || 'ffmpeg'; // ffmpeg on PATH, or set FFMPEG to a binary
 const SR = 48000;
 
 function runFfmpeg(args, { stdin = false } = {}) {
@@ -77,7 +77,7 @@ async function main() {
   const f1 = Math.min(Math.round(TL.duration * FPS), Math.round(to * FPS));
   const frames = f1 - f0;
   if (!(frames > 0)) C.die(`nothing to render: --from ${from} --to ${to} (duration ${TL.duration}s)`);
-  const out = C.resolveOut(typeof args.out === 'string' ? args.out : fixtures ? 'exports/fixtures.mp4' : 'exports/butterfly-life.mp4');
+  const out = C.resolveOut(typeof args.out === 'string' ? args.out : fixtures ? 'exports/fixtures.mp4' : `exports/${C.SLUG}.mp4`);
   fs.mkdirSync(path.dirname(out), { recursive: true });
   const work = path.join(C.TMP, C.uniqueName('render'));
   fs.mkdirSync(work, { recursive: true });

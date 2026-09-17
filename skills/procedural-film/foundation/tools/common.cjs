@@ -6,6 +6,7 @@ const path = require('path');
 const vm = require('vm');
 
 const ROOT = path.resolve(__dirname, '..');
+const SLUG = path.basename(ROOT); // the project folder is named for the film's slug
 const SRC = path.join(ROOT, 'src');
 const FIX = path.join(__dirname, 'fixtures');
 const TMP = path.join(ROOT, '.tmp');
@@ -421,6 +422,7 @@ function fmtT(T) {
 
 module.exports = {
   ROOT,
+  SLUG,
   SRC,
   FIX,
   TMP,

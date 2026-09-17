@@ -25,9 +25,9 @@ This skill packages a proven pipeline. It ships three things:
 
 ### 1. Setup
 
-Create the project folder named for the film's slug and copy `foundation/` into it. Run `npm install` in `tools/` (Playwright; add `npx playwright install chromium` if the browser is missing) and confirm ffmpeg is installed. Copy the templates into `docs/` and set the subject in `docs/CONTRACT.md`'s Goal. Rename the example film in `tools/build.cjs` (default output name, page title, usage comments) and `tools/render.cjs` (default output name, usage comments).
+Create the project folder named for the film's slug and copy `foundation/` into it. Run `npm install` in `tools/` (Playwright; add `npx playwright install chromium` there if the browser is missing) and confirm ffmpeg is on the PATH, or set `FFMPEG` to its binary. Copy the templates into `docs/` and set the subject in `docs/CONTRACT.md`'s Goal.
 
-Done when: `node tools/smoke.cjs` passes, `node tools/check.cjs --fixtures` is green, `node tools/render.cjs --fixtures --scale 0.5` yields `exports/fixtures.mp4` with sound, and `grep -ri "butterfly\|monarch" src tools` finds nothing. The **fixtures** mini-film proves the toolchain before the film invests in planning.
+Done when: `node tools/smoke.cjs` passes, `node tools/check.cjs --fixtures` is green and `node tools/render.cjs --fixtures --scale 0.5` yields `exports/fixtures.mp4` with sound. The **fixtures** mini-film proves the toolchain before the film invests in planning.
 
 ### 2. Research
 
