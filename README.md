@@ -1,0 +1,76 @@
+# procedural-film
+
+An agent skill that turns a topic into a 30-second vertical film.
+Every pixel is drawn in vanilla JavaScript on a canvas and every sound is synthesised in Web Audio, so the film ships with zero media assets.
+The output is one self-contained HTML player plus MP4 exports.
+
+The reference film is `examples/butterfly-life`, the life cycle of a monarch butterfly: 17 shots, 32 seconds, 120 bpm, 1080x1920 at 24 fps.
+
+- Watch the phone cut: [`examples/butterfly-life/exports/butterfly-life-phone.mp4`](examples/butterfly-life/exports/butterfly-life-phone.mp4)
+- Full-quality master: [v1.0.0 release](https://github.com/kuhnhomeuk-cell/procedural-film/releases/tag/v1.0.0)
+- Interactive player: download [`examples/butterfly-life/dist/butterfly-life.html`](examples/butterfly-life/dist/butterfly-life.html) and open it in a browser
+
+## What is in the repo
+
+| Path | Contents |
+|---|---|
+| `skills/procedural-film/` | The skill. `SKILL.md` is the pipeline, `foundation/` is the engine and tools copied into each new film, `templates/` holds the four planning documents, `reference/` holds scene and music guides. |
+| `examples/butterfly-life/` | The butterfly film as the skill produces it: planning docs, source, tools, the HTML player and the phone MP4. |
+
+## Requirements
+
+- Node.js 20 or newer
+- ffmpeg on the `PATH`
+- Chromium for Playwright (`npx playwright install chromium`)
+- An agent that runs skills and can dispatch subagents, for example Claude Code. The pipeline runs one agent per scene in parallel.
+
+## Install the skill
+
+Clone the repo, then link the skill into your agent's skills folder.
+A link keeps the worked example reachable at `examples/butterfly-life/` beside the skill.
+
+```bash
+git clone https://github.com/kuhnhomeuk-cell/procedural-film.git
+```
+
+```bash
+ln -s "$PWD/procedural-film/skills/procedural-film" ~/.claude/skills/procedural-film
+```
+
+For agents that read `~/.agents/skills/`, link it there instead.
+
+## Make a film
+
+Ask your agent for a short film about a topic, for example "make a procedural film about the life of a honeybee".
+The skill runs ten steps: setup, research, art bible, storyboard, timeline, stub pass, scenes, music, critic waves, deliver.
+`node tools/check.cjs` is the gate at every step from the stub pass onward.
+
+Expect a long run.
+A full film runs one agent per shot writing scene files of 1000+ lines each, then critic waves, so it spends a large share of a usage plan.
+
+## Rebuild the butterfly film
+
+```bash
+npm install --prefix examples/butterfly-life/tools
+```
+
+```bash
+node examples/butterfly-life/tools/check.cjs
+```
+
+```bash
+node examples/butterfly-life/tools/render.cjs
+```
+
+`check.cjs` runs the six-check gate and exits 0 when green.
+`render.cjs` writes `examples/butterfly-life/exports/butterfly-life.mp4`.
+`node examples/butterfly-life/tools/build.cjs` rebuilds the HTML player.
+
+## Credit
+
+The look and editing are modelled on Kevin Ngo's ["The life of a fruit fly"](https://x.com/kevin_t_ngo/status/2099858454043349342).
+`examples/butterfly-life/docs/reference-analysis.md` records what was taken from it.
+
+## License
+
+MIT. See [`LICENSE`](LICENSE).
