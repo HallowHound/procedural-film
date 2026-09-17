@@ -1,5 +1,7 @@
 # procedural-film
 
+![Six frames from the butterfly-life film, alternating hand-inked paper shots and navy blueprint shots](media/banner.jpg)
+
 An agent skill that turns a topic into a 30-second vertical film.
 Every pixel is drawn in vanilla JavaScript on a canvas and every sound is synthesised in Web Audio, so the film ships with zero media assets.
 The output is one self-contained HTML player plus MP4 exports.
