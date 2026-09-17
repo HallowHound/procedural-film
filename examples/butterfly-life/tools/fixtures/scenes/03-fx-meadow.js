@@ -16,6 +16,6 @@ FILM.scene({
       L.crossHatch(ctx, L.ellipsePts(x + 6, y + 8, 18 - i, 12, 24), { spacing: 4.5, width: 0.9, alpha: 0.6, seed: 50 + i, tone: 0.35 });
     }
     L.arcAnnotation(ctx, 540, 900, 380, -2.6, -0.4, { color: P.annBlue, p: L.seg(t, 0, 1.2, 'outCubic'), dash: [14, 10] });
-    L.glowDot(ctx, 860, 360, 60, { color: P.sun, core: '#fff4c8', additive: false, rays: 12, rayLen: 2.4, twinkle: 0.05 });
+    L.glowDot(ctx, 860, 360, 60, { color: P.sun, core: P.glow, additive: false, rays: 12, rayLen: 2.4, twinkle: 0.05 });
   },
 });

@@ -13,6 +13,8 @@ This skill packages a proven pipeline. It ships three things:
 - `templates/` — the four planning documents every film starts from.
 - `reference/` — read only when a step below points at one.
 
+Look first: `reference/example-contact-sheet.jpg` (the whole example film, 24 labelled frames), `reference/example-paper-frame.jpg` and `reference/example-blueprint-frame.jpg` (one full frame of each plate). That density and that finish are the bar.
+
 ## The gate
 
 `node tools/check.cjs` is the gate: six checks (media scan, determinism, source scan, timeline, draw, frame cost), and exit 0 means green. From the stub pass onward, no step is done while the gate is red. On real scenes it takes under a minute — let it finish.
@@ -22,6 +24,12 @@ This skill packages a proven pipeline. It ships three things:
 `butterfly-life` is a finished film from this pipeline, at `../../examples/butterfly-life/` from this skill folder, or online at https://github.com/kuhnhomeuk-cell/procedural-film/tree/main/examples/butterfly-life when that folder is absent. When a template leaves the shape of a filled document unclear, read its counterpart there: `docs/art-bible.md`, `docs/storyboard.md`, `src/timeline.js`, `src/scenes/`, `src/music.js`. Take its structure; the subject comes from step 2's research.
 
 ## Pipeline
+
+### 0. Brief
+
+Ask one round of questions: the subject, what the film must include about it, and the length if it differs from 30 seconds. Invent the rest and say what you invented.
+
+Done when: the subject is one written sentence the user has seen.
 
 ### 1. Setup
 
@@ -41,11 +49,11 @@ Fill `docs/art-bible.md` from the template. Sections 1–9 are the house style �
 
 If the user wants a different look than the house style, run a reference analysis first — `templates/reference-analysis.md` shows the method (step through one reference video, written notes only, end with numbered style rules) — then update art-bible sections 1–9 to match before continuing.
 
-Done when: every element the storyboard will draw has a drawing rule and a palette name, `src/lib.js` holds the same values as section 2.2, and the mistakes list exists.
+Done when: every element the storyboard will draw has a drawing rule and a palette name, `src/lib.js` holds the same values as section 2.2, the mistakes list exists, and `node tools/snap.cjs --fixtures --shot palette --samples 5 --sheet` has been looked at: every swatch named, each colour judged against its neighbours on both plates. Every scene agent copies this palette, so a wrong hue costs every scene file.
 
 ### 4. Storyboard
 
-Fill `docs/storyboard.md` from the template: logline; numbers (pick a bpm, then beat = 60/bpm seconds and the duration lands in whole bars); summary table; acts mapped to bars; a shared-geometry table for every shape that survives a **match cut**; then one entry per shot — 1 to 3 seconds each, boundaries on the beat grid, plates alternating — with all eight subsections, the Sound cues timestamped on the grid.
+Read `reference/shot-types.md` for the shot types the example film proves, then fill `docs/storyboard.md` from the template: logline; numbers (pick a bpm, then beat = 60/bpm seconds and the duration lands in whole bars); summary table; acts mapped to bars; a shared-geometry table for every shape that survives a **match cut**; then one entry per shot — 1 to 3 seconds each, boundaries on the beat grid, plates alternating — with all eight subsections, the Sound cues timestamped on the grid.
 
 Done when: the shots tile [0, duration] exactly, with no gaps or overlaps, every shot has all eight subsections, every match-cut shape has a shared-geometry table, and the doc survives a self-review with a critic's eye: every number in the prose matches the tables (beat arithmetic, act boundaries), and no must-read content sits outside the safe area (x 60–940, y 220–1540) — arithmetic included. Storyboard errors compound into every scene; this is the cheapest moment to catch them.
 
@@ -75,7 +83,9 @@ Done when: `node tools/audio/render-audio.cjs` then `node tools/audio/analyze.cj
 
 ### 9. Critic waves
 
-Review every shot on rendered frames: fresh contact sheets, critic subagents scoring composition, faithfulness to the storyboard, motion and density. Critics **measure** ratio-critical geometry in pixels against the art bible (band fractions, thirds, safe-area arithmetic, shared-geometry positions) rather than judging by eye alone, and snap both sides of every match cut to compare.
+Start with the whole film on one sheet: `node tools/snap.cjs --samples 24 --sheet --scale 0.25`. A shot that fails to read at that size is a P1 — the fix is composition, not more detail.
+
+Then review every shot on rendered frames: fresh contact sheets, critic subagents scoring composition, faithfulness to the storyboard, motion and density. Critics **measure** ratio-critical geometry in pixels against the art bible (band fractions, thirds, safe-area arithmetic, shared-geometry positions) rather than judging by eye alone, and snap both sides of every match cut to compare.
 
 Fix in waves — prioritised briefs (P1 first, each citing evidence frames), file ownership (resume the owning agent rather than spawning a fresh one), re-snap after every fix. The director spot-checks every P1 fix on fresh frames. Spot-check determinism by snapping the same frames in two different orders and comparing file hashes.
 
@@ -92,4 +102,6 @@ ffmpeg -i exports/<slug>.mp4 -c:v libx264 -crf 23 -preset medium -c:a copy expor
 
 `node tools/build.cjs` writes `dist/<slug>.html`. Then watch the master end to end with sound, and open the HTML player once (click or space to play, arrow keys step frames, `?shot=<id>` loops one shot).
 
-Done when: master, phone transcode and the HTML file exist, the gate is green, and the final watch-through found nothing to fix.
+Write the shot list last: one line per shot saying what it shows, next to the exports, so whoever shares the film can caption it.
+
+Done when: master, phone transcode, the HTML file and the shot list exist, the gate is green, and the final watch-through found nothing to fix.

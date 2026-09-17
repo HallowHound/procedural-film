@@ -20,7 +20,7 @@ FILM.scene({
     ctx.clip();
 
     // sun
-    L.glowDot(ctx, 880, 250, 46, { color: P.sun, core: '#fff1c2', additive: false, rays: 16, rayLen: 2.3, rayWidth: 0.12, twinkle: 0.04, glow: 3 });
+    L.glowDot(ctx, 880, 250, 46, { color: P.sun, core: P.glow, additive: false, rays: 16, rayLen: 2.3, rayWidth: 0.12, twinkle: 0.04, glow: 3 });
     L.guideCircle(ctx, 880, 250, 92, { color: P.inkFaint, alpha: 0.5, dash: [3, 7] });
 
     // milkweed leaf

@@ -15,7 +15,7 @@ The reference film is `examples/butterfly-life`, the life cycle of a monarch but
 
 | Path | Contents |
 |---|---|
-| `skills/procedural-film/` | The skill. `SKILL.md` is the pipeline, `foundation/` is the engine and tools copied into each new film, `templates/` holds the four planning documents, `reference/` holds scene and music guides. |
+| `skills/procedural-film/` | The skill. `SKILL.md` is the pipeline, `foundation/` is the engine and tools copied into each new film, `templates/` holds the four planning documents, `reference/` holds the shot-type index, scene and music guides, and frames from the example as the visual target. |
 | `examples/butterfly-life/` | The butterfly film as the skill produces it: planning docs, source, tools, the HTML player and the phone MP4. |
 
 ## Requirements

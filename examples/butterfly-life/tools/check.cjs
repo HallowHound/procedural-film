@@ -9,7 +9,8 @@
 //                  hash identically warm forward, warm reversed, in a fresh page shuffled with decoys, cold (the first
 //                  draw in a fresh page) and sequential (drawn straight after the frame before it)
 //   3 sources      no Math.random, Date, performance.now or crypto randomness in src drawing/audio code;
-//                  no text drawn below the Shorts safe area (literal y > 1540)
+//                  no text drawn below the Shorts safe area (literal y > 1540);
+//                  warns on a literal hex colour outside lib.js (colours come from lib.pal)
 //   4 timeline     shots cover 0..duration with no gaps or overlaps; every shot's file registers its id
 //   5 draw         first, middle and last frame of every shot draw without throwing
 //   6 cost         frame times from a sweep across the film; slowest frames listed
@@ -31,6 +32,29 @@ function report(n, name, ok, summary, details = []) {
   console.log(`[${tag}] ${n} ${name}: ${summary}`);
   for (const d of details.slice(0, 40)) console.log(`       ${d}`);
   if (details.length > 40) console.log(`       ... ${details.length - 40} more`);
+}
+
+// Widest channel spread over a 32x32 downscale of the current frame: <= 6 means one flat colour.
+function flatness(pg) {
+  return pg.page.evaluate(() => {
+    const s = 32;
+    const o = document.createElement('canvas');
+    o.width = s;
+    o.height = s;
+    const x = o.getContext('2d');
+    x.drawImage(window.FILM.canvas, 0, 0, s, s);
+    const d = x.getImageData(0, 0, s, s).data;
+    const mn = [255, 255, 255];
+    const mx = [0, 0, 0];
+    for (let i = 0; i < d.length; i += 4) {
+      for (let k = 0; k < 3; k++) {
+        const v = d[i + k];
+        if (v < mn[k]) mn[k] = v;
+        if (v > mx[k]) mx[k] = v;
+      }
+    }
+    return Math.max(mx[0] - mn[0], mx[1] - mn[1], mx[2] - mn[2]);
+  });
 }
 
 // Remove comments, keep strings (so a banned call hidden in a string still counts).
@@ -131,12 +155,32 @@ async function main() {
         if (m && Number(m[1]) > 1540) hits.push(`${C.rel(f)}:${i + 1}  text y ${m[1]} below the Shorts safe area (y must be <= 1540)  | ${line.trim().slice(0, 100)}`);
       });
     }
-    report(3, 'sources', hits.length === 0, hits.length ? `${hits.length} banned call(s)` : `no Math.random / Date / performance.now / crypto randomness or unsafe-area text in ${files.length} files`, hits);
+    // colours come from lib.pal (art bible 2.2): a literal hex in a scene or timeline file drifts from the palette
+    const hexWarns = [];
+    const literalHex = /#[0-9a-fA-F]{6}\b/;
+    for (const f of [...src.sceneFiles, path.join(src.base, 'timeline.js')]) {
+      if (!fs.existsSync(f)) continue;
+      stripComments(fs.readFileSync(f, 'utf8')).split('\n').forEach((line, i) => {
+        const m = line.match(literalHex);
+        if (m) hexWarns.push(`warn: ${C.rel(f)}:${i + 1}  literal colour ${m[0]} outside lib.js (name it in lib.pal)  | ${line.trim().slice(0, 80)}`);
+      });
+    }
+    report(
+      3,
+      'sources',
+      hits.length ? false : hexWarns.length ? 'WARN' : true,
+      hits.length
+        ? `${hits.length} banned call(s)`
+        : `no Math.random / Date / performance.now / crypto randomness or unsafe-area text in ${files.length} files${hexWarns.length ? `; ${hexWarns.length} literal colour(s) outside lib.js` : ''}`,
+      [...hits, ...hexWarns]
+    );
   }
 
   // ---------------------------------------------------------------- 4 timeline (static part)
   const tlProblems = [...src.problems];
   const tlWarnings = [];
+  const sixteenth = TL.bpm > 0 ? 15 / TL.bpm : 0; // 60/bpm is a beat; a 16th is a quarter of it
+  const offGrid = (t) => sixteenth > 0 && Math.abs(t / sixteenth - Math.round(t / sixteenth)) > 1e-3;
   {
     const shots = TL.shots;
     const EPS = 1e-6;
@@ -157,6 +201,7 @@ async function main() {
         if (d < -EPS) tlProblems.push(`overlap of ${(-d).toFixed(4)}s between '${prev.id}' (ends ${prev.end}) and '${s.id}' (starts ${s.start})`);
       }
       if (Math.abs(s.start * FPS - Math.round(s.start * FPS)) > 1e-4) tlWarnings.push(`shot '${s.id}' starts between frames (${s.start}s)`);
+      if (offGrid(s.start)) tlWarnings.push(`shot '${s.id}' starts at ${s.start}s, off the 16th-note grid at ${TL.bpm} bpm`);
       const tr = s.transitionIn;
       if (tr) {
         const kinds = ['cut', 'fade', 'flash', 'iris', 'wipe'];
@@ -167,6 +212,10 @@ async function main() {
       const m = String(s.mode || '').toLowerCase();
       if (!/illus|schem|blue|none|raw/.test(m)) tlWarnings.push(`shot '${s.id}' mode '${s.mode}' is neither illustrated nor schematic (treated as illustrated)`);
     });
+    // every event sits on the beat grid (16ths at the film's bpm), so cuts and hits land together
+    for (const c of TL.cues || []) {
+      if (typeof c.t === 'number' && offGrid(c.t)) tlWarnings.push(`cue at ${c.t}s is off the 16th-note grid at ${TL.bpm} bpm${c.note ? ` (${String(c.note).slice(0, 40)})` : ''}`);
+    }
     if (shots.length && Math.abs(shots[shots.length - 1].end - TL.duration) > EPS) {
       tlProblems.push(`last shot '${shots[shots.length - 1].id}' ends at ${shots[shots.length - 1].end}, duration is ${TL.duration}`);
     }
@@ -214,7 +263,7 @@ async function main() {
       report(
         4,
         'timeline',
-        tlProblems.length === 0,
+        tlProblems.length ? false : tlWarnings.length ? 'WARN' : true,
         tlProblems.length
           ? `${tlProblems.length} problem(s)`
           : `${TL.shots.length} shots cover 0..${TL.duration}s with no gaps or overlaps; every shot's file registers its id`,
@@ -239,6 +288,10 @@ async function main() {
         for (const [label, f] of [['first', f0], ['middle', fm], ['last', f1]]) {
           const r = await pg.page.evaluate((T) => window.__h.render(T), f / FPS);
           drawn++;
+          const softened = label === 'first' && shot.transitionIn && shot.transitionIn.kind !== 'cut';
+          if (!softened && (await flatness(pg)) <= 6) {
+            drawFails.push(`${shot.id} ${label} frame f${f} (T=${(f / FPS).toFixed(3)}) is one flat colour: a blank frame reads as a bug`);
+          }
           if (label === 'first') firstTouch.push(`${shot.id} f${f} ${r.ms.toFixed(0)}ms`);
           if (r.shot !== shot.id) drawFails.push(`${shot.id} ${label} frame f${f}: active shot was '${r.shot}'`);
           for (const e of r.errors) {
