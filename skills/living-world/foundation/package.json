@@ -1,0 +1,17 @@
+{
+  "name": "living-world-foundation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Deterministic ambient journeys, browser wallpapers and resumable long-form video",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node tools/cli.cjs preview",
+    "build": "node tools/cli.cjs build",
+    "test": "node --test test/*.test.cjs",
+    "check": "node tools/cli.cjs check",
+    "test:integration": "node test/integration.cjs",
+    "snap": "node tools/cli.cjs snap",
+    "render": "node tools/cli.cjs render"
+  },
+  "devDependencies": { "playwright": "^1.57.0" }
+}

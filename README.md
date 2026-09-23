@@ -1,4 +1,30 @@
-# procedural-film
+# procedural-film + Living World
+
+This fork adds **Living World**: slow procedural landscapes with persistent
+travellers, a dog, environmental motion, a small journey, evening camp life,
+a browser-wallpaper mode and resumable long-form MP4 export.
+
+**Start here:** [Living World guide](LIVING_WORLD.md) ·
+[Agent skill](skills/living-world/SKILL.md) ·
+[Runnable foundation](skills/living-world/foundation/)
+
+```bash
+cd skills/living-world/foundation
+npm install
+npx playwright install chromium
+npm start
+```
+
+Open the local preview shown in the terminal. `npm run build` creates a standalone
+HTML player. The default episode lasts 15 minutes; `--duration 10800` retimes the
+same two-vista story to three hours. More locations/story chapters must be authored,
+not assumed. See the guide for wallpapers, your own music, export and testing.
+
+The original short-film pipeline and butterfly example remain unchanged below.
+
+---
+
+## Original procedural-film
 
 ![Six frames from the butterfly-life film, alternating hand-inked paper shots and navy blueprint shots](media/banner.jpg)
 
@@ -31,7 +57,7 @@ Clone the repo, then link the skill into your agent's skills folder.
 A link keeps the worked example reachable at `examples/butterfly-life/` beside the skill.
 
 ```bash
-git clone https://github.com/kuhnhomeuk-cell/procedural-film.git
+git clone https://github.com/HallowHound/procedural-film.git
 ```
 
 ```bash
