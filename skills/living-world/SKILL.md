@@ -11,9 +11,11 @@ The deliverables are an offline HTML player, source/planning documents, review
 frames and, when requested, a rendered MP4. This is a coding/art-direction workflow,
 not a runtime call to a generative video model.
 
-Read `../../LIVING_WORLD.md` when available, then `foundation/src/world.js`,
-`foundation/src/scene.js` and `templates/PROJECT.md`. The starter is an executable
-15-minute two-vista episode, not the visual ceiling or an all-theme world engine.
+Read `reference/ART_ACCEPTANCE.md` first. Then read `../../LIVING_WORLD.md` when
+available, `foundation/src/world.js`, `foundation/src/scene.js` and
+`templates/PROJECT.md`. The starter is an executable 15-minute two-vista episode,
+not the visual ceiling or an all-theme world engine. The first version was too
+visually simple; the second art study is not automatically an accepted reference.
 
 ## Invariants
 
@@ -32,6 +34,8 @@ Read `../../LIVING_WORLD.md` when available, then `foundation/src/world.js`,
   needs an explicit asset/license contract and adjusted checks.
 - Do not render a multi-hour master before visual/motion gates pass. Do not
   allocate full-length audio buffers or spool the whole film as PNGs.
+- A working renderer is not art acceptance. Do not replace material-specific
+  construction with noise, particle count, repeated generic shapes or line count.
 
 ## Workflow
 
@@ -62,10 +66,18 @@ Use authoritative references for any claimed real-world facts; fiction does not
 need invented factual citations. Pick one visual language and apply it across all
 vistas. The template's starter palette is an example, not a universal house style.
 
-Render the first composed frame, not a placeholder. Inspect it at full size and
-thumbnail size. More line count or particles do not substitute for composition.
+Follow `reference/ART_ACCEPTANCE.md`: inspect the agreed reference at native size
+and compare the new frame at thumbnail, full-frame and material/cast crop scales.
+When the brief asks for butterfly-level richness, inspect the original reference
+frames and art bible; do not use the sparse first Living World demo as the target.
+State which references could not be inspected instead of claiming equivalence.
 
-Done: an appealing still with readable characters, a clear route and coherent light.
+Render the first composed frame, not a placeholder. More line count or particles
+do not substitute for composition or material structure. Detail must describe
+forms: rock fractures, actual branching, cloth folds, leaf veins and masonry.
+
+Done: a reviewed still with coherent light, readable cast, material specificity,
+and explicit remaining defects. Technical checks alone cannot pass this gate.
 
 ### 4. Canonical cast and normal-speed motion study
 
@@ -108,6 +120,12 @@ frames, then request explicit times around every action/transition. Watch short
 normal-speed clips; a still sheet cannot prove good animation. Assign critical
 issues first: identity drift, broken anatomy/contact, teleports, obstructed action,
 wrong lighting, distracting repetition. Re-render evidence after each fix.
+
+Perform separate composition, material-specificity and motion passes. Supply a
+matched-resolution before/after and native-scale crops, not only tiny thumbnails.
+`node test/visual-review.cjs` adds repeatability/cache checks and review stills;
+it does not score art quality. Do not declare the reference matched without an
+actual visual comparison and acceptance.
 
 For parallel agents, use ownership by subsystem: cast, environment, director,
 player/export. One owner integrates shared contracts. Subagents are optional;
