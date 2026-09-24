@@ -27,8 +27,8 @@ WebGL depth sheet; material-specific motion, small camera movement and a deliber
 camera stress mode are available. No inference is performed during playback.
 
 The study retains the original reference aspect in its UI for comparison. Its API
-default and the proposed production default are 1280x720 / 16:9. Wide/tall study
-views are labelled crops, not new compositions. The 399x501 source is not a 4K asset.
+default is 1280x720; the proposed production target is 1920x1080, both 16:9. Wide/tall
+study views are labelled crops, not new compositions. The 399x501 source is not a 4K asset.
 
 ```bash
 python -m pip install -r requirements.txt
