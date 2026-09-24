@@ -1,0 +1,5 @@
+private-build/
+evidence/
+__pycache__/
+.venv/
+*.partial.mp4
